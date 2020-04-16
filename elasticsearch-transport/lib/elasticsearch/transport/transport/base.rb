@@ -81,6 +81,8 @@ module Elasticsearch
           self
         rescue SnifferTimeoutError
           logger.error "[SnifferTimeoutError] Timeout when reloading connections." if logger
+          # Force recycling connections with current hosts. It will force a DNS resolution.
+          __rebuild_connections :hosts => hosts, :options => options
           self
         end
 
